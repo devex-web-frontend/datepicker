@@ -1,0 +1,20 @@
+{
+  "name": "datepicker",
+  "version": "2.0.2",
+  "private": true,
+  "license": "MPL-2.0",
+  "main": "./src/js/datepicker.js",
+  "ignore": [
+    ".*",
+    "test/**",
+    "*.conf.js",
+    "Gruntfile.js",
+    "package.json",
+    "bower.json"
+  ],
+  "dependencies": {
+    "dxjs": "git://github.com/devex-web-frontend/dxjs.git#2.0.3",
+    "dropdown": "git://github.com/devex-web-frontend/dropdown.git#2.0.1",
+    "calendar": "git://github.com/devex-web-frontend/calendar.git#2.0.1"
+  }
+}
