@@ -40,15 +40,18 @@ var Datepicker = (function(DX, window, document, undefined) {
 			'<div class="' + CN_DROPDOWN_CALENDAR + '"></div>'
 		].join(''),
 		TMPL_CALENDAR = [
-			'<div class="' + CN_CALENDAR_INFO +'">',
-				'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_PREV].join(' ') + '"><span>prev</span></button>',
-				'<span class="' + [CN_CALENDAR_MONTH, CN_CALENDAR_MONTH_CURRENT].join(' ') + '"></span>',
-				'<span class="' + CN_CALENDAR_YEAR + '"></span>',
-				'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_NEXT].join(' ') + '"><span>next</span></button>',
+			'<div class="' + CN_CALENDAR_INFO + '">',
+			'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_PREV].join(' ') +
+			'"><span>prev</span></button>',
+			'<span class="' + [CN_CALENDAR_MONTH, CN_CALENDAR_MONTH_CURRENT].join(' ') + '"></span>',
+			'<span class="' + CN_CALENDAR_YEAR + '"></span>',
+			'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_NEXT].join(' ') +
+			'"><span>next</span></button>',
 			'</div>',
 			'<div class="' + CN_CALENDAR_HEADER + '"></div>',
 			'<div class="' + CN_CALENDAR_DATES + '"></div>'
-		].join('');
+		].join(''),
+		dateFormatter = dateUtil.toShortISOString;
 
 
 	function createWidget(input) {
@@ -224,7 +227,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 
 			if (isSelectableDate(dayModel)) {
 				selectedDate = dayModel.date;
-				input.value = dateUtil.toShortISOString(selectedDate);
+				input.value = dateFormatter(selectedDate);
 				calendar.update();
 				dropdown.hide();
 				fireDateChanged(input);
@@ -253,6 +256,9 @@ var Datepicker = (function(DX, window, document, undefined) {
 		this.getEventTarget = function() {
 			return input;
 		};
+		this.setDateFormatter = function(customDateFormatter) {
+			dateFormatter = customDateFormatter;
+		}
 	};
 })(DX, window, document);
 
