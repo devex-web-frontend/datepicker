@@ -75,7 +75,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 
 	function isSelectableDate(dateObject) {
 		return dateObject.modifiers.indexOf(M_DISABLED) === -1 &&
-				dateObject.modifiers.indexOf(M_CURRENT_MONTH) > -1;
+			dateObject.modifiers.indexOf(M_CURRENT_MONTH) > -1;
 	}
 
 	function isDateInRange(date, config) {
@@ -86,12 +86,12 @@ var Datepicker = (function(DX, window, document, undefined) {
 
 		if (config.min) {
 			isGreaterOrEqual = dateUtil.isGreater(date, firstAvailableDate) ||
-					dateUtil.isEqual(date, firstAvailableDate);
+				dateUtil.isEqual(date, firstAvailableDate);
 		}
 
 		if (config.max) {
 			isLessOrEqual = dateUtil.isLess(date, lastAvailableDate) ||
-					dateUtil.isEqual(date, lastAvailableDate);
+				dateUtil.isEqual(date, lastAvailableDate);
 		}
 
 		return isLessOrEqual && isGreaterOrEqual;
@@ -209,14 +209,14 @@ var Datepicker = (function(DX, window, document, undefined) {
 
 			if (dateUtil.isDate(lastAvailableMonth)) {
 				elements.nextSwitcher.disabled = dateUtil.isEqualMonth(currentMonth, lastAvailableMonth) ||
-						dateUtil.isGreaterMonth(currentMonth, lastAvailableMonth);
+					dateUtil.isGreaterMonth(currentMonth, lastAvailableMonth);
 			} else {
 				elements.nextSwitcher.disabled = false;
 			}
 
 			if (dateUtil.isDate(firstAvailableMonth)) {
 				elements.prevSwitcher.disabled = dateUtil.isEqualMonth(currentMonth, firstAvailableMonth) ||
-						dateUtil.isLessMonth(currentMonth, firstAvailableMonth);
+					dateUtil.isLessMonth(currentMonth, firstAvailableMonth);
 			} else {
 				elements.prevSwitcher.disabled = false;
 			}
@@ -258,7 +258,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 		};
 		this.setDateFormatter = function(customDateFormatter) {
 			dateFormatter = customDateFormatter;
-		}
+		};
 	};
 })(DX, window, document);
 
