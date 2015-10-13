@@ -41,7 +41,7 @@ describe('Datepicker', function() {
 
 		it('should fire E_CREATED once and pass block and eventTarget as e.detail', function() {
 			var input = document.getElementById('test'),
-					spy = jasmine.createSpy('created');
+				spy = jasmine.createSpy('created');
 
 			input.addEventListener(Datepicker.E_CREATED, spy);
 
@@ -66,9 +66,41 @@ describe('Datepicker', function() {
 		describe('#getEventTarget()', function() {
 			it('should return input passed', function() {
 				var input = document.getElementById('test'),
-						datepicker = new Datepicker(input);
+					datepicker = new Datepicker(input);
 
 				expect(datepicker.getEventTarget()).toBe(input);
+			});
+		});
+
+		describe('#setDateFormatter()', function() {
+			iit('should set provided function as default date formatter', function() {
+				var input = document.getElementById('test'),
+					datepicker = new Datepicker(input),
+					customFormatter = function() {
+						return 'date!'
+					};
+
+				datepicker.setDateFormatter(customFormatter);
+
+
+
+				DX.Event.trigger(document.querySelector('.calendar'), Calendar.E_DAY_SELECTED, {
+					detail: {
+						dayModel: {
+							date: new Date(2014, 0, 1),
+							modifiers: ['currentMonth'],
+							calendarMonth: new Date(2014, 0, 1)
+						}
+					}
+				});
+				waitsFor(function() {
+					return input.value !== '';
+				}, 500);
+
+				runs(function() {
+					expect(input.value).toBe('date!');
+				});
+
 			});
 		});
 	});
