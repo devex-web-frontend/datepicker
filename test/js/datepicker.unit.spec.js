@@ -72,8 +72,30 @@ describe('Datepicker', function() {
 			});
 		});
 
+		describe('#setDateParser()', function() {
+			it('should set provided function as default date formatter', function() {
+				var input = document.getElementById('test'),
+					datepicker = new Datepicker(input),
+					mockDate = new Date(2014, 0, 1),
+					customParser = function() {
+						return mockDate;
+					},
+					calendar = window.Calendar.___instance,
+					dropDownInput = window.DropDown.___instance.getEventTarget();
+
+				spyOn(calendar, 'drawMonth');
+				datepicker.setDateParser(customParser);
+
+				DX.Event.trigger(dropDownInput, DropDown.E_SHOWN);
+
+				runs(function() {
+					expect(calendar.drawMonth).toHaveBeenCalledWith(mockDate);
+				});
+
+			});
+		});
 		describe('#setDateFormatter()', function() {
-			iit('should set provided function as default date formatter', function() {
+			it('should set provided function as default date formatter', function() {
 				var input = document.getElementById('test'),
 					datepicker = new Datepicker(input),
 					customFormatter = function() {
@@ -81,8 +103,6 @@ describe('Datepicker', function() {
 					};
 
 				datepicker.setDateFormatter(customFormatter);
-
-
 
 				DX.Event.trigger(document.querySelector('.calendar'), Calendar.E_DAY_SELECTED, {
 					detail: {

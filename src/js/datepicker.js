@@ -50,8 +50,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 			'</div>',
 			'<div class="' + CN_CALENDAR_HEADER + '"></div>',
 			'<div class="' + CN_CALENDAR_DATES + '"></div>'
-		].join(''),
-		dateFormatter = dateUtil.toShortISOString;
+		].join('');
 
 
 	function createWidget(input) {
@@ -101,7 +100,11 @@ var Datepicker = (function(DX, window, document, undefined) {
 	 * @constructor
 	 */
 	return function Datepicker(input) {
-		var dropdown, calendar, elements, container, selectedDate, constraints;
+		var dropdown, calendar, elements, container, selectedDate, constraints,
+			dateFormatter = dateUtil.toShortISOString,
+			dateParser = function(value) {
+				return new Date(value);
+			};
 
 		function init() {
 			constraints = constraints ? constraints : {};
@@ -188,7 +191,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 		}
 
 		function setDefaultValue() {
-			var valueDate = new Date(input.value),
+			var valueDate = dateParser(input.value),
 				date;
 
 			if (dateUtil.isDate(valueDate)) {
@@ -258,6 +261,9 @@ var Datepicker = (function(DX, window, document, undefined) {
 		};
 		this.setDateFormatter = function(customDateFormatter) {
 			dateFormatter = customDateFormatter;
+		};
+		this.setDateParser = function(customDateParser) {
+			dateParser = customDateParser;
 		};
 	};
 })(DX, window, document);
