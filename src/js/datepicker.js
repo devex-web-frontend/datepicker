@@ -3,6 +3,7 @@
  *
  * @requires DX
  * @requires DX.Dom
+ * @requires DX.Tmpl
  * @requires DX.Date
  * @requires DX.Event
  */
@@ -33,10 +34,11 @@ var Datepicker = (function(DX, window, document, undefined) {
 		A_MAX_DATE = 'max',
 		A_MIN_DATE = 'min',
 		defaults = {
-			tmplContainerInner: [
+			CONTAINER_INNER_TMPL: [
 				'<span class="' + CN_DATEPICKER_INPUT + '"></span>',
-				'<button type="button" class="button"><span>Show Calendar</span></button>'
+				'<button type="button" class="button">{%= BUTTON_INNER_TMPL %}</button>'
 			].join(''),
+			BUTTON_INNER_TMPL : '<span>Show Calendar</span>',
 			TMPL_DROPDOWN_INNER: [
 				'<div class="' + CN_DROPDOWN_CALENDAR + '"></div>'
 			].join(''),
@@ -59,7 +61,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 		var parent = dom.getParent(input),
 			container = dom.createElement('span', {
 				className: CN_DATEPICKER,
-				innerHTML: config.tmplContainerInner
+				innerHTML: DX.Tmpl.process(config.CONTAINER_INNER_TMPL, config)
 			}),
 			inputWrapper = container.querySelector('.' + CN_DATEPICKER_INPUT);
 
@@ -112,7 +114,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 		function init() {
 			config = Object.assign({}, defaults, customConfig);
 			constraints = constraints ? constraints : {};
-
+			console.log(config)
 			updateConstraints();
 			initAppearance();
 			initDropdown();

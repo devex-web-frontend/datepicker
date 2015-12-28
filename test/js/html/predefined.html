@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="../../../lib/dxjs/src/dx.core.js"></script>
 	<script type="text/javascript" src="../../../lib/dxjs/src/dx.dom.js"></script>
 	<script type="text/javascript" src="../../../lib/dxjs/src/dx.event.js"></script>
+	<script type="text/javascript" src="../../../lib/dxjs/src/dx.tmpl.js"></script>
 	<script type="text/javascript" src="../../../lib/dxjs/src/dx.bem.js"></script>
 	<script type="text/javascript" src="../../../lib/dxjs/src/dx.date.js"></script>
 	<script type="text/javascript" src="../../../lib/dxjs/src/dx.measure.js"></script>
@@ -18,7 +19,7 @@
 <body>
 <input id="test" type="date" min="2010-06-15" max="2010-10-05" value="2010-08-16"/>
 <script type="text/javascript">
-	new Datepicker(document.getElementById('test'));
+	new Datepicker(document.getElementById('test'),{BUTTON_INNER_TMPL: 'Wow such button'});
 </script>
 </body>
 </html>
