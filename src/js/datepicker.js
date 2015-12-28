@@ -32,32 +32,34 @@ var Datepicker = (function(DX, window, document, undefined) {
 		CN_CALENDAR_YEAR = CN_CALENDAR + '--year',
 		A_MAX_DATE = 'max',
 		A_MIN_DATE = 'min',
-		tmplContainerInner = [
-			'<span class="' + CN_DATEPICKER_INPUT + '"></span>',
-			'<button type="button" class="button"><span>Show Calendar</span></button>'
-		].join(''),
-		TMPL_DROPDOWN_INNER = [
-			'<div class="' + CN_DROPDOWN_CALENDAR + '"></div>'
-		].join(''),
-		TMPL_CALENDAR = [
-			'<div class="' + CN_CALENDAR_INFO + '">',
-			'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_PREV].join(' ') +
-			'"><span>prev</span></button>',
-			'<span class="' + [CN_CALENDAR_MONTH, CN_CALENDAR_MONTH_CURRENT].join(' ') + '"></span>',
-			'<span class="' + CN_CALENDAR_YEAR + '"></span>',
-			'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_NEXT].join(' ') +
-			'"><span>next</span></button>',
-			'</div>',
-			'<div class="' + CN_CALENDAR_HEADER + '"></div>',
-			'<div class="' + CN_CALENDAR_DATES + '"></div>'
-		].join('');
+		defaults = {
+			tmplContainerInner: [
+				'<span class="' + CN_DATEPICKER_INPUT + '"></span>',
+				'<button type="button" class="button"><span>Show Calendar</span></button>'
+			].join(''),
+			TMPL_DROPDOWN_INNER: [
+				'<div class="' + CN_DROPDOWN_CALENDAR + '"></div>'
+			].join(''),
+			TMPL_CALENDAR: [
+				'<div class="' + CN_CALENDAR_INFO + '">',
+				'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_PREV].join(' ') +
+				'"><span>prev</span></button>',
+				'<span class="' + [CN_CALENDAR_MONTH, CN_CALENDAR_MONTH_CURRENT].join(' ') + '"></span>',
+				'<span class="' + CN_CALENDAR_YEAR + '"></span>',
+				'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_NEXT].join(' ') +
+				'"><span>next</span></button>',
+				'</div>',
+				'<div class="' + CN_CALENDAR_HEADER + '"></div>',
+				'<div class="' + CN_CALENDAR_DATES + '"></div>'
+			].join('')
+		};
 
 
-	function createWidget(input) {
+	function createWidget(input, config) {
 		var parent = dom.getParent(input),
 			container = dom.createElement('span', {
 				className: CN_DATEPICKER,
-				innerHTML: tmplContainerInner
+				innerHTML: config.tmplContainerInner
 			}),
 			inputWrapper = container.querySelector('.' + CN_DATEPICKER_INPUT);
 
@@ -99,14 +101,16 @@ var Datepicker = (function(DX, window, document, undefined) {
 	/**
 	 * @constructor
 	 */
-	return function Datepicker(input) {
+	return function Datepicker(input, customConfig) {
 		var dropdown, calendar, elements, container, selectedDate, constraints,
+			config,
 			dateFormatter = dateUtil.toShortISOString,
 			dateParser = function(value) {
 				return new Date(value);
 			};
 
 		function init() {
+			config = Object.assign({}, defaults, customConfig);
 			constraints = constraints ? constraints : {};
 
 			updateConstraints();
@@ -133,12 +137,12 @@ var Datepicker = (function(DX, window, document, undefined) {
 		}
 
 		function initAppearance() {
-			container = createWidget(input);
+			container = createWidget(input, config);
 		}
 
 		function initDropdown() {
 			dropdown = new DropDown(input, {
-				innerTmpl: TMPL_DROPDOWN_INNER,
+				innerTmpl: config.TMPL_DROPDOWN_INNER,
 				modifiers: CN_DATEPICKER
 			});
 		}
@@ -147,7 +151,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 			var calendarBlock = dropdown.getBlock().querySelector('.' + CN_DROPDOWN_CALENDAR);
 
 			calendar = new Calendar(calendarBlock, {
-				tmpl: TMPL_CALENDAR
+				tmpl: config.TMPL_CALENDAR
 			});
 
 			calendar.registerProcessor(selectedDateProcessor);
