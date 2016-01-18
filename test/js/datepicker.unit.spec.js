@@ -39,6 +39,20 @@ describe('Datepicker', function() {
 			expect(input.type).toBe('text');
 		});
 
+		it('should use custom templates if provided', function() {
+			var input = document.getElementById('test');
+
+			new Datepicker(input, {
+				BUTTON_INNER_TMPL : 'Show wow',
+				NEXT_BUTTON_TMPL: 'such next',
+				PREV_BUTTON_TMPL: 'very prev'
+			});
+
+			expect(document.querySelector('.datepicker > button').innerHTML).toEqual('Show wow');
+			expect(document.querySelector('.calendar--switcher-next').innerHTML).toEqual('such next');
+			expect(document.querySelector('.calendar--switcher-prev').innerHTML).toEqual('very prev');
+		});
+
 		it('should fire E_CREATED once and pass block and eventTarget as e.detail', function() {
 			var input = document.getElementById('test'),
 				spy = jasmine.createSpy('created');
