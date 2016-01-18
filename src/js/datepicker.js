@@ -114,7 +114,6 @@ var Datepicker = (function(DX, window, document, undefined) {
 		function init() {
 			config = Object.assign({}, defaults, customConfig);
 			constraints = constraints ? constraints : {};
-			console.log(config)
 			updateConstraints();
 			initAppearance();
 			initDropdown();

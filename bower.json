@@ -13,8 +13,8 @@
     "bower.json"
   ],
   "dependencies": {
-    "dxjs": "git://github.com/devex-web-frontend/dxjs.git#2.0.3",
-    "dropdown": "git://github.com/devex-web-frontend/dropdown.git#^2.0.1",
-    "calendar": "git://github.com/devex-web-frontend/calendar.git#^2.0.1"
+    "dxjs": "devex-web-frontend/dxjs#2.0.3",
+    "dropdown": "devex-web-frontend/dropdown#^2.5.0",
+    "calendar": "devex-web-frontend/calendar#^2.0.1"
   }
 }
