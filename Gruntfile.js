@@ -16,6 +16,13 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+
+		jsdoc2md: {
+			oneOutputFile: {
+				src: "src/js/datepicker.js",
+				dest: "doc/documentation.md"
+			}
+		},
 		karma: {
 			e2e_dev: {
 				configFile: 'karma.e2e.conf.js',
@@ -43,9 +50,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-karma');
+	grunt.loadNpmTasks("grunt-jsdoc-to-markdown");
 
 	grunt.registerTask('build', ['test']);
 	grunt.registerTask('test', ['jshint', 'karma:unit', 'connect:testserver', 'karma:e2e']);
 	grunt.registerTask('e2e_dev', ['connect:testserver', 'karma:e2e_dev']);
 	grunt.registerTask('default', ['build']);
+	grunt.registerTask("doc", "jsdoc2md");
 };

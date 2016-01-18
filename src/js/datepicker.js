@@ -6,6 +6,7 @@
  * @requires DX.Tmpl
  * @requires DX.Date
  * @requires DX.Event
+ * @namespace
  */
 var Datepicker = (function(DX, window, document, undefined) {
 	'use strict';
@@ -101,7 +102,10 @@ var Datepicker = (function(DX, window, document, undefined) {
 	}
 
 	/**
-	 * @constructor
+	 * Creates new datepicker
+	 * @constructor Datepicker
+	 * @param {Node|Element} input
+	 * @param {Object} customConfig
 	 */
 	return function Datepicker(input, customConfig) {
 		var dropdown, calendar, elements, container, selectedDate, constraints,
@@ -257,22 +261,55 @@ var Datepicker = (function(DX, window, document, undefined) {
 		}
 
 		init();
-
+		/**
+		 * Gets HTMLNode containing dropdown
+		 * @method getBlock
+		 * @returns {Node}
+		 */
 		this.getBlock = function() {
 			return container;
 		};
+		/**
+		 * Gets element which listens to events
+		 * @method getEventTarget
+		 * @returns {Node}
+		 */
 		this.getEventTarget = function() {
 			return input;
 		};
+		/**
+		 * Sets custom date formatter
+		 * @method setDateFormatter
+		 * @param {Function} customDateFormatter
+		 */
 		this.setDateFormatter = function(customDateFormatter) {
 			dateFormatter = customDateFormatter;
 		};
+		/**
+		 * Sets custom date parser
+		 * @method setDateParser
+		 * @param {Function} customDateParser
+		 */
 		this.setDateParser = function(customDateParser) {
 			dateParser = customDateParser;
 		};
 	};
 })(DX, window, document);
-
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
 Datepicker.E_CREATED = 'datepicker:created';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
 Datepicker.E_CHANGED = 'datepicker:changed';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
 Datepicker.E_UPDATE_CONSTRAINTS = 'datepicker:updateconstraints';
