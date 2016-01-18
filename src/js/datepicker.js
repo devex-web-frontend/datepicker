@@ -43,14 +43,16 @@ var Datepicker = (function(DX, window, document, undefined) {
 			TMPL_DROPDOWN_INNER: [
 				'<div class="' + CN_DROPDOWN_CALENDAR + '"></div>'
 			].join(''),
+			NEXT_BUTTON_TMPL: '<span>next</span>',
+			PREV_BUTTON_TMPL: '<span>prev</span>',
 			TMPL_CALENDAR: [
 				'<div class="' + CN_CALENDAR_INFO + '">',
 				'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_PREV].join(' ') +
-				'"><span>prev</span></button>',
+				'">{%= PREV_BUTTON_TMPL %}</button>',
 				'<span class="' + [CN_CALENDAR_MONTH, CN_CALENDAR_MONTH_CURRENT].join(' ') + '"></span>',
 				'<span class="' + CN_CALENDAR_YEAR + '"></span>',
 				'<button class="' + [CN_BUTTON, CN_CALENDAR_SWITCHER, CN_CALENDAR_SWITCHER_NEXT].join(' ') +
-				'"><span>next</span></button>',
+				'">{%= NEXT_BUTTON_TMPL %}</button>',
 				'</div>',
 				'<div class="' + CN_CALENDAR_HEADER + '"></div>',
 				'<div class="' + CN_CALENDAR_DATES + '"></div>'
@@ -156,7 +158,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 			var calendarBlock = dropdown.getBlock().querySelector('.' + CN_DROPDOWN_CALENDAR);
 
 			calendar = new Calendar(calendarBlock, {
-				tmpl: config.TMPL_CALENDAR
+				tmpl: DX.Tmpl.process(config.TMPL_CALENDAR, config)
 			});
 
 			calendar.registerProcessor(selectedDateProcessor);
