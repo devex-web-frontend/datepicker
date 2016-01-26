@@ -112,7 +112,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 	return function Datepicker(input, customConfig) {
 		var dropdown, calendar, elements, container, selectedDate, constraints,
 			config,
-			dateFormatter = dateUtil.toShortISOString,
+			dateFormatter = dateUtil.toShortISOString.bind(dateUtil),
 			dateParser = function(value) {
 				return new Date(value);
 			};
