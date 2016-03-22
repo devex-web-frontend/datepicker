@@ -8,7 +8,7 @@
  * @requires DX.Event
  * @namespace
  */
-var Datepicker = (function(DX, window, document, undefined) {
+var Datepicker = (function(DX) {
 	'use strict';
 
 	var dom = DX.Dom,
@@ -296,7 +296,7 @@ var Datepicker = (function(DX, window, document, undefined) {
 			dateParser = customDateParser;
 		};
 	};
-})(DX, window, document);
+})(DX);
 /** @constant
  * @type {string}
  * @default
