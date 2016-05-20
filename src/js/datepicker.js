@@ -120,6 +120,7 @@ var Datepicker = (function(DX) {
 		function init() {
 			config = Object.assign({}, defaults, customConfig);
 			constraints = constraints ? constraints : {};
+
 			updateConstraints();
 			initAppearance();
 			initDropdown();
@@ -179,9 +180,14 @@ var Datepicker = (function(DX) {
 		}
 
 		function initListeners() {
+
 			elements.dropDownOpener.addEventListener(event.CLICK, function() {
-				dropdown.show();
+				if (!isDisabled()) {
+					dropdown.show();
+				}
 			});
+
+
 			elements.prevSwitcher.addEventListener(event.CLICK, function() {
 				calendar.drawPrevMonth();
 				toggleSwitchersState();
@@ -200,6 +206,12 @@ var Datepicker = (function(DX) {
 				fireDateChanged(input);
 			});
 		}
+
+
+		function isDisabled() {
+			return input.disabled;
+		}
+
 
 		function setDefaultValue() {
 			var valueDate = dateParser(input.value),
@@ -315,3 +327,30 @@ Datepicker.E_CHANGED = 'datepicker:changed';
  * @memberof Datepicker
  */
 Datepicker.E_UPDATE_CONSTRAINTS = 'datepicker:updateconstraints';
+
+
+/**
+ * Disable Datepicker
+ * @param {HtmlElement} input
+ */
+Datepicker.disable = function enableDatepicker(input) {
+	'use strict';
+
+	var block = DX.Dom.getAscendantByClassName(input, 'datepicker');
+
+	DX.Bem.addModifier(block, 'disabled');
+	input.disabled = true;
+};
+
+/**
+ * Enable Datepicker
+ * @param {HtmlElement} input
+ */
+Datepicker.enable = function enableDatepicker(input) {
+	'use strict';
+
+	var block = DX.Dom.getAscendantByClassName(input, 'datepicker');
+
+	DX.Bem.removeModifier(block, 'disabled');
+	input.disabled = false;
+};
