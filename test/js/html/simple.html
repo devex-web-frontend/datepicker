@@ -29,12 +29,12 @@
 	</style>
 </head>
 <body>
-<input id="test" type="date"/>
+<input disabled id="test" type="date"/>
 
 <button id="toggleStateButton">Toggle State</button>
 <script type="text/javascript">
 	var input = DX.$('test'),
-		isDisabled = false,
+		isDisabled = true,
 		button = DX.$('toggleStateButton');
 
 	new Datepicker(input, {NEXT_BUTTON_TMPL: 'so much next'});

@@ -146,6 +146,10 @@ var Datepicker = (function(DX) {
 
 		function initAppearance() {
 			container = createWidget(input, config);
+			if(isDisabled()) {
+				DX.Bem.addModifier(container, M_DISABLED);
+			}
+
 		}
 
 		function initDropdown() {

@@ -23,6 +23,14 @@ describe('Datepicker', function() {
 			expect(document.querySelector('.button')).not.toBeNull();
 		});
 
+		it('should add `disabled` modifier to wrapper if original input disabled', function() {
+			var input = document.getElementById('test');
+			input.disabled = true;
+
+			new Datepicker(input);
+			expect(document.querySelectorAll('.datepicker-disabled').length).toBe(1);
+		});
+
 		it('should save original input', function() {
 			var input = document.getElementById('test'),
 				datepicker = new Datepicker(input),
