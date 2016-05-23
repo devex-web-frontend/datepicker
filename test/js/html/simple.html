@@ -15,11 +15,40 @@
 	<script type="text/javascript" src="../../../lib/calendar/src/js/calendar.js"></script>
 	<script type="text/javascript" src="../../../lib/dropdown/src/js/dropdown.js"></script>
 	<script type="text/javascript" src="../../../src/js/datepicker.js"></script>
+	<style type="text/css">
+		.dropDown {
+			display: none;
+		}
+		.dropDown-shown {
+			display: block;
+		}
+
+		.dropDown-hidden {
+			display: block;
+		}
+	</style>
 </head>
 <body>
-<input id="test" type="date"/>
+<input disabled id="test" type="date"/>
+
+<button id="toggleStateButton">Toggle State</button>
 <script type="text/javascript">
-	new Datepicker(document.getElementById('test'), {NEXT_BUTTON_TMPL: 'so much next'});
+	var input = DX.$('test'),
+		isDisabled = true,
+		button = DX.$('toggleStateButton');
+
+	new Datepicker(input, {NEXT_BUTTON_TMPL: 'so much next'});
+
+
+	button.addEventListener('click', function () {
+		if (isDisabled) {
+			Datepicker.enable(input);
+		} else {
+			Datepicker.disable(input);
+		}
+		isDisabled = !isDisabled;
+	})
+
 </script>
 </body>
 </html>

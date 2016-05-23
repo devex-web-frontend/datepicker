@@ -23,6 +23,14 @@ describe('Datepicker', function() {
 			expect(document.querySelector('.button')).not.toBeNull();
 		});
 
+		it('should add `disabled` modifier to wrapper if original input disabled', function() {
+			var input = document.getElementById('test');
+			input.disabled = true;
+
+			new Datepicker(input);
+			expect(document.querySelectorAll('.datepicker-disabled').length).toBe(1);
+		});
+
 		it('should save original input', function() {
 			var input = document.getElementById('test'),
 				datepicker = new Datepicker(input),
@@ -171,4 +179,54 @@ describe('Datepicker', function() {
 			expect(Datepicker.E_UPDATE_CONSTRAINTS).toBe('datepicker:updateconstraints');
 		});
 	});
+
+
+	describe('Static Methods', function() {
+		describe('#disable()', function() {
+			it('should disable original input', function() {
+				var input = document.getElementById('test');
+
+				new Datepicker(input);
+				Datepicker.disable(input);
+
+				expect(input.disabled).toBe(true);
+			});
+
+			it('should add datepicker-disabled modifier to block', function() {
+				var input = document.getElementById('test'),
+					block;
+
+				new Datepicker(input);
+				block = document.querySelector('.datepicker');
+				Datepicker.disable(input);
+
+				expect(block.classList.contains('datepicker-disabled')).toBe(true);
+			});
+		});
+
+		describe('#enable()', function() {
+			it('should enable original input', function() {
+				var input = document.getElementById('test');
+
+				input.disabled = true;
+				new Datepicker(input);
+				Datepicker.enable(input);
+
+				expect(input.disabled).toBe(false);
+			});
+
+			it('should remove datepicker-disabled modifier from block', function() {
+				var input = document.getElementById('test'),
+					block;
+
+				input.disabled = true;
+				new Datepicker(input);
+				block = document.querySelector('.datepicker');
+				Datepicker.enable(input);
+
+				expect(block.classList.contains('datepicker-disabled')).toBe(false);
+			});
+		});
+	})
+	
 });
