@@ -59,7 +59,6 @@ var Datepicker = (function(DX) {
 			].join('')
 		};
 
-
 	function createWidget(input, config) {
 		var parent = dom.getParent(input),
 			container = dom.createElement('span', {
@@ -149,7 +148,6 @@ var Datepicker = (function(DX) {
 			if(isDisabled()) {
 				DX.Bem.addModifier(container, M_DISABLED);
 			}
-
 		}
 
 		function initDropdown() {
@@ -158,7 +156,6 @@ var Datepicker = (function(DX) {
 				modifiers: CN_DATEPICKER
 			});
 		}
-
 		function initCalendar() {
 			var calendarBlock = dropdown.getBlock().querySelector('.' + CN_DROPDOWN_CALENDAR);
 
@@ -214,6 +211,10 @@ var Datepicker = (function(DX) {
 
 		function isDisabled() {
 			return input.disabled;
+		}
+
+		function isShown() {
+			return dropdown.isShown();
 		}
 
 
@@ -279,6 +280,13 @@ var Datepicker = (function(DX) {
 		}
 
 		init();
+		/**
+		 * Checks if dropdown is shown
+		 * @method getBlock
+		 * @returns {Node}
+		 */
+		this.isShown = isShown;
+
 		/**
 		 * Gets HTMLNode containing dropdown
 		 * @method getBlock
