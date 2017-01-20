@@ -213,7 +213,7 @@ var Datepicker = (function(DX) {
 			return input.disabled;
 		}
 
-		function isShown() {
+		function isDropDownShown() {
 			return dropdown.isShown();
 		}
 
@@ -282,10 +282,10 @@ var Datepicker = (function(DX) {
 		init();
 		/**
 		 * Checks if dropdown is shown
-		 * @method getBlock
+		 * @method isDropDownShown
 		 * @returns {Node}
 		 */
-		this.isShown = isShown;
+		this.isDropDownShown = isDropDownShown;
 
 		/**
 		 * Gets HTMLNode containing dropdown
