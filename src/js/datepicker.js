@@ -209,6 +209,14 @@ var Datepicker = (function(DX) {
 		}
 
 
+		function destroy() {
+			container.remove();
+			dropdown.getBlock().remove();
+
+			DX.Event.trigger(input, Datepicker.E_DESTROYED);
+		}
+
+
 		function isDisabled() {
 			return input.disabled;
 		}
@@ -333,6 +341,12 @@ Datepicker.E_CREATED = 'datepicker:created';
  * @memberof Datepicker
  */
 Datepicker.E_CHANGED = 'datepicker:changed';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_DESTROYED = 'datepicker:destroyed';
 /** @constant
  * @type {string}
  * @default
