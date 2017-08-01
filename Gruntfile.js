@@ -16,7 +16,13 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-
+		stylus: {
+			compile: {
+				files: {
+					'test/js/css/datepicker.css': 'test/js/styl/datepicker.styl'
+				}
+			}
+		},
 		jsdoc2md: {
 			oneOutputFile: {
 				src: "src/js/datepicker.js",
@@ -50,6 +56,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-karma');
+	grunt.loadNpmTasks('grunt-contrib-stylus');
 	grunt.loadNpmTasks("grunt-jsdoc-to-markdown");
 
 	grunt.registerTask('build', ['test']);
