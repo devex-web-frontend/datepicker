@@ -291,7 +291,7 @@ var Datepicker = (function(DX) {
 
 			isDisabledFlag && addDisabledModifier();
 
-			if (!isDisabledFlag && isWeekend(currentDate)) {
+			if (!isDisabledFlag && config.isDisabledWeekends && isWeekend(currentDate)) {
 				addDisabledModifier();
 				isDisabledFlag = true;
 			}
