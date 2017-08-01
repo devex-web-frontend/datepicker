@@ -35,6 +35,9 @@ var Datepicker = (function(DX) {
 		A_MAX_DATE = 'max',
 		A_MIN_DATE = 'min',
 		defaults = {
+			isDisabledWeekends: false,
+			disabledDates: [],
+			disabledDatesRanges: [],
 			CONTAINER_INNER_TMPL: [
 				'<span class="' + CN_DATEPICKER_INPUT + '"></span>',
 				'<button type="button" class="button">{%= BUTTON_INNER_TMPL %}</button>'
@@ -70,7 +73,6 @@ var Datepicker = (function(DX) {
 		input.type = 'text';
 		parent.insertBefore(container, input);
 		inputWrapper.appendChild(input);
-
 		return container;
 	}
 
@@ -83,18 +85,23 @@ var Datepicker = (function(DX) {
 			dateObject.modifiers.indexOf(M_CURRENT_MONTH) > -1;
 	}
 
-	function isDateInRange(date, config) {
-		var firstAvailableDate = new Date(config.min),
-			lastAvailableDate = new Date(config.max),
+	function isWeekend (date) {
+		var day = date.getDay();
+		return day === 0 || day === 6
+	}
+
+	function isDateInRange(date, range) {
+		var firstAvailableDate = new Date(range.min),
+			lastAvailableDate = new Date(range.max),
 			isGreaterOrEqual = true,
 			isLessOrEqual = true;
 
-		if (config.min) {
+		if (range.min) {
 			isGreaterOrEqual = dateUtil.isGreater(date, firstAvailableDate) ||
 				dateUtil.isEqual(date, firstAvailableDate);
 		}
 
-		if (config.max) {
+		if (range.max) {
 			isLessOrEqual = dateUtil.isLess(date, lastAvailableDate) ||
 				dateUtil.isEqual(date, lastAvailableDate);
 		}
@@ -158,7 +165,6 @@ var Datepicker = (function(DX) {
 		}
 		function initCalendar() {
 			var calendarBlock = dropdown.getBlock().querySelector('.' + CN_DROPDOWN_CALENDAR);
-
 			calendar = new Calendar(calendarBlock, {
 				tmpl: DX.Tmpl.process(config.TMPL_CALENDAR, config)
 			});
@@ -272,10 +278,50 @@ var Datepicker = (function(DX) {
 		}
 
 		function disabledDatesProcessor(dateObject) {
-			var date = dateObject.date;
+			var currentDate = dateObject.date;
 
-			if (!isDateInRange(date, constraints)) {
+			var addDisabledModifier = function() {
 				dateObject.modifiers.push(M_DISABLED);
+			};
+
+			var isDisabledFlag = !isDateInRange(currentDate, {
+				min: constraints.min,
+				max: constraints.max
+			});
+
+			isDisabledFlag && addDisabledModifier();
+
+			if (!isDisabledFlag && isWeekend(currentDate)) {
+				addDisabledModifier();
+				isDisabledFlag = true;
+			}
+
+			if (!isDisabledFlag && config.disabledDates.length > 0) {
+				var isDisabled = config.disabledDates.some(function(date){
+					return dateUtil.isEqual(currentDate, date);
+				});
+				if (isDisabled) {
+					addDisabledModifier();
+					isDisabledFlag = true;
+				}
+			}
+
+			if(!isDisabledFlag && config.disabledDatesRanges.length > 0) {
+				var isDisabled = config.disabledDatesRanges.some(function(disabledDatesRange) {
+					var min, max;
+					min = disabledDatesRange[0];
+					if (disabledDatesRange.length === 2) {
+						max = disabledDatesRange[1];
+					}
+					return !isDateInRange(currentDate, {
+						min: min,
+						max: max
+					});
+				});
+
+				if (isDisabled) {
+					addDisabledModifier();
+				}
 			}
 		}
 
