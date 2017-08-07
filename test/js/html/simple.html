@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+	<link href="../css/datepicker.css" rel="stylesheet"/>
 	<script type="text/javascript" src="../../../lib/object-array-utils/src/array.js"></script>
 	<script type="text/javascript" src="../../../lib/object-array-utils/src/object.js"></script>
 	<script type="text/javascript" src="../../../lib/dxjs/src/dx.core.js"></script>
@@ -37,7 +39,14 @@
 		isDisabled = true,
 		button = DX.$('toggleStateButton');
 
-	new Datepicker(input, {NEXT_BUTTON_TMPL: 'so much next'});
+	new Datepicker(input, {
+		NEXT_BUTTON_TMPL: 'so much next',
+		isDisabledWeekends: true,
+		disabledDates: [
+			new Date('08-16-2017'),
+			new Date('08-23-2017')
+		]
+	});
 
 
 	button.addEventListener('click', function () {
