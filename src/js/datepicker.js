@@ -197,10 +197,9 @@ var Datepicker = (function(DX) {
 
 		function destroy() {
 			removeListeners();
+			DX.Event.trigger(input, Datepicker.E_DESTROYED);
 			container.remove();
 			dropdown.destroy();
-
-			DX.Event.trigger(input, Datepicker.E_DESTROYED);
 		}
 
 		function removeListeners() {
