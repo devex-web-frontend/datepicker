@@ -33,14 +33,33 @@
 <body>
 <input id="test" type="date" min="2010-06-15" max="2010-10-05" value="2010-08-16"/>
 <script type="text/javascript">
-	new Datepicker(document.getElementById('test'),{
-		BUTTON_INNER_TMPL: 'Wow such button',
-		isDisabledWeekends: true,
-		disabledDates: [
-			new Date('08-18-2010'),
-			new Date('07-23-2010')
-		]
+	var element  = document.getElementById('test');
+	new Datepicker(element,{
+		BUTTON_INNER_TMPL: 'Wow such button'
 	});
+
+	setTimeout(function() {
+		console.log('Datepicker.E_UPDATE_CONFIG');
+		DX.Event.trigger(element, Datepicker.E_UPDATE_CONFIG, {
+			detail: {
+				isDisabledWeekends: true,
+				disabledDates: [
+					new Date('08-18-2010'),
+					new Date('07-23-2010')
+				]
+			}
+		})
+	}, 5000);
+
+	setTimeout(function() {
+		console.log('Datepicker.E_UPDATE_CONFIG');
+		DX.Event.trigger(element, Datepicker.E_UPDATE_CONFIG, {
+			detail: {
+				isDisabledWeekends: false,
+				disabledDates: []
+			}
+		})
+	}, 10000);
 </script>
 </body>
 </html>
