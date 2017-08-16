@@ -150,6 +150,12 @@ var Datepicker = (function(DX) {
 			constraints.max = maxDate ? maxDate : undefined;
 		}
 
+		function updateConfig(event) {
+			var updatedConfig = event.detail;
+			config = Object.assign({}, config, updatedConfig);
+			calendar.update();
+		}
+
 		function initAppearance() {
 			container = createWidget(input, config);
 			if(isDisabled()) {
@@ -209,6 +215,7 @@ var Datepicker = (function(DX) {
 			dropdown.getEventTarget().addEventListener(DropDown.E_SHOWN, setDefaultValue);
 
 			input.addEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
+			input.addEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
 			input.addEventListener(event.BLUR, function() {
 				fireDateChanged(input);
 			});
@@ -385,6 +392,13 @@ Datepicker.E_CHANGED = 'datepicker:changed';
  * @memberof Datepicker
  */
 Datepicker.E_UPDATE_CONSTRAINTS = 'datepicker:updateconstraints';
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_UPDATE_CONFIG = 'datepicker:updateconfig';
 
 
 /**
