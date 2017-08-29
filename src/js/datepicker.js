@@ -278,6 +278,18 @@ var Datepicker = (function(DX) {
 			}
 		}
 
+		function setDisabledDates(props = {isDisabledWeekends: false, disabledDates: [], disabledDatesRanges: []}) {
+			props.isDisabledWeekends = !!props.isDisabledWeekends;
+			props.disabledDates = Array.isArray(props.disabledDates) ? props.disabledDates : [];
+			props.disabledDatesRanges = Array.isArray(props.disabledDatesRanges) ? props.disabledDatesRanges : [];
+
+			config.isDisabledWeekends = props.isDisabledWeekends;
+			config.disabledDates = props.disabledDates;
+			config.disabledDatesRanges = props.disabledDatesRanges;
+
+			calendar.registerProcessor(disabledDatesProcessor);
+		}
+
 		function selectedDateProcessor(dateObject) {
 			if (selectedDate && dateUtil.isEqual(dateObject.date, selectedDate)) {
 				dateObject.modifiers.push(M_SELECTED);
