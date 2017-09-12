@@ -35,6 +35,7 @@ var Datepicker = (function(DX) {
 		A_MAX_DATE = 'max',
 		A_MIN_DATE = 'min',
 		defaults = {
+			isVisibleCalendar: false,
 			isDisabledWeekends: false,
 			disabledDates: [],
 			disabledDatesRanges: [],
@@ -133,6 +134,8 @@ var Datepicker = (function(DX) {
 			initCalendar();
 			initElements();
 			initListeners();
+
+			if (config.isVisibleCalendar) dropdown.show();
 
 			DX.Event.trigger(input, Datepicker.E_CREATED, {
 				detail: {
