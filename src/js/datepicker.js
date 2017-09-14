@@ -135,7 +135,7 @@ var Datepicker = (function(DX) {
 			initElements();
 			initListeners();
 
-			if (config.isVisibleCalendar) dropdown.show();
+			if (config.isVisibleCalendar) showDropdown();
 
 			DX.Event.trigger(input, Datepicker.E_CREATED, {
 				detail: {
@@ -151,6 +151,10 @@ var Datepicker = (function(DX) {
 
 			constraints.min = minDate ? minDate : undefined;
 			constraints.max = maxDate ? maxDate : undefined;
+		}
+
+		function showDropdown() {
+			dropdown.show();
 		}
 
 		function updateConfig(event) {
@@ -199,7 +203,7 @@ var Datepicker = (function(DX) {
 
 			elements.dropDownOpener.addEventListener(event.CLICK, function() {
 				if (!isDisabled()) {
-					dropdown.show();
+					showDropdown();
 				}
 			});
 
@@ -219,6 +223,7 @@ var Datepicker = (function(DX) {
 
 			input.addEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.addEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
+			input.addEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
 			input.addEventListener(event.BLUR, function() {
 				fireDateChanged(input);
 			});
@@ -402,6 +407,13 @@ Datepicker.E_UPDATE_CONSTRAINTS = 'datepicker:updateconstraints';
  * @memberof Datepicker
  */
 Datepicker.E_UPDATE_CONFIG = 'datepicker:updateconfig';
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_SHOW_DROPDOWN = 'datepicker:showdropdown';
 
 
 /**
