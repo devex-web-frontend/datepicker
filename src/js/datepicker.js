@@ -35,6 +35,7 @@ var Datepicker = (function(DX) {
 		A_MAX_DATE = 'max',
 		A_MIN_DATE = 'min',
 		defaults = {
+			isVisibleCalendar: false,
 			isDisabledWeekends: false,
 			disabledDates: [],
 			disabledDatesRanges: [],
@@ -134,6 +135,8 @@ var Datepicker = (function(DX) {
 			initElements();
 			initListeners();
 
+			if (config.isVisibleCalendar) showDropdown();
+
 			DX.Event.trigger(input, Datepicker.E_CREATED, {
 				detail: {
 					block: container,
@@ -148,6 +151,10 @@ var Datepicker = (function(DX) {
 
 			constraints.min = minDate ? minDate : undefined;
 			constraints.max = maxDate ? maxDate : undefined;
+		}
+
+		function showDropdown() {
+			dropdown.show();
 		}
 
 		function updateConfig(event) {
@@ -204,6 +211,7 @@ var Datepicker = (function(DX) {
 
 			input.addEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.addEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
+			input.addEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
 			input.addEventListener(event.BLUR, inputBlurHandler);
 		}
 
@@ -227,6 +235,7 @@ var Datepicker = (function(DX) {
 
 			input.removeEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.removeEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
+			input.removeEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
 			input.removeEventListener(event.BLUR, inputBlurHandler);
 		}
 
@@ -343,7 +352,7 @@ var Datepicker = (function(DX) {
 
 		function dropDownOpenerClickHandler() {
 			if (!isDisabled()) {
-				dropdown.show();
+				showDropdown();
 			}
 		}
 		function prevSwitcherClickHandler() {
@@ -425,6 +434,13 @@ Datepicker.E_UPDATE_CONSTRAINTS = 'datepicker:updateconstraints';
  * @memberof Datepicker
  */
 Datepicker.E_UPDATE_CONFIG = 'datepicker:updateconfig';
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_SHOW_DROPDOWN = 'datepicker:showdropdown';
 
 
 /**

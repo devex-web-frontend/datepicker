@@ -60,6 +60,11 @@
 			}
 		})
 	}, 10000);
+
+	setTimeout(function() {
+		console.log('Datepicker.E_SHOW_DROPDOWN');
+		DX.Event.trigger(element, Datepicker.E_SHOW_DROPDOWN, {})
+	}, 12000);
 </script>
 </body>
 </html>
