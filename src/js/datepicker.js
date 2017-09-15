@@ -376,6 +376,12 @@ var Datepicker = (function(DX) {
 		this.isDropDownShown = isDropDownShown;
 
 		/**
+		 * Destroying datepicker component and its dropdown
+		 * @method destroy
+		 */
+		this.destroy = destroy;
+
+		/**
 		 * Gets HTMLNode containing dropdown
 		 * @method getBlock
 		 * @returns {Node}
