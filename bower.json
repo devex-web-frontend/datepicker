@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "dxjs": "devex-web-frontend/dxjs#2.0.3",
-    "dropdown": "devex-web-frontend/dropdown#^2.5.0",
+    "dropdown": "devex-web-frontend/dropdown#^2.8.0",
     "calendar": "devex-web-frontend/calendar#^2.0.1"
   }
 }
