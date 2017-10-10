@@ -170,6 +170,12 @@ var Datepicker = (function(DX) {
 			}
 		}
 
+		function removeAppearence() {
+			var parent = DX.Dom.getParent(container);
+			parent.insertBefore(input, container);
+			container.remove();
+		}
+
 		function initDropdown() {
 			dropdown = new DropDown(input, {
 				innerTmpl: config.TMPL_DROPDOWN_INNER,
@@ -219,6 +225,7 @@ var Datepicker = (function(DX) {
 		function destroy() {
 			removeListeners();
 			DX.Event.trigger(input, Datepicker.E_DESTROYED);
+			removeAppearence();
 			dropdown.destroy();
 		}
 
