@@ -31,23 +31,37 @@
 	</style>
 </head>
 <body>
-<input disabled id="test" type="date"/>
+<div>
+	<input disabled id="test" type="date"/>
+</div>
 
-<button id="toggleStateButton">Toggle State</button>
+<div style="margin-top: 20px;">
+	<button id="Init">Init</button>
+	<button id="toggleStateButton">Toggle State</button>
+	<button id="DestroyWithEvent">Destroy with event</button>
+	<button id="DestroyWithInstance">Destroy with instance</button>
+</div>
+
+
 <script type="text/javascript">
 	var input = DX.$('test'),
 		isDisabled = true,
+		deatepicker,
 		button = DX.$('toggleStateButton');
+		buttonInit = DX.$('Init'),
+		buttonDestroyWithEvent = DX.$('DestroyWithEvent'),
+		buttonDestroyWithInstance = DX.$('DestroyWithInstance');
 
-	new Datepicker(input, {
-		NEXT_BUTTON_TMPL: 'so much next',
-		isDisabledWeekends: true,
-		disabledDates: [
-			new Date('08-16-2017'),
-			new Date('08-23-2017')
-		]
-	});
-
+	function init() {
+		deatepicker = new Datepicker(input, {
+			NEXT_BUTTON_TMPL: 'so much next',
+			isDisabledWeekends: true,
+			disabledDates: [
+				new Date('08-16-2017'),
+				new Date('08-23-2017')
+			]
+		});
+	}
 
 	button.addEventListener('click', function () {
 		if (isDisabled) {
@@ -56,8 +70,28 @@
 			Datepicker.disable(input);
 		}
 		isDisabled = !isDisabled;
-	})
+	});
+
+	buttonInit.addEventListener('click', function() {
+		if (typeof deatepicker === 'undefined') {
+			init();
+		}
+	});
+
+	buttonDestroyWithInstance.addEventListener('click', function() {
+		if (typeof deatepicker !== 'undefined') {
+			deatepicker.destroy();
+			deatepicker = undefined;
+		}
+
+	});
+
+	buttonDestroyWithEvent.addEventListener('click', function() {
+		DX.Event.trigger(input, Datepicker.E_DESTROY);
+		deatepicker = undefined;
+	});
 
 </script>
 </body>
 </html>
+

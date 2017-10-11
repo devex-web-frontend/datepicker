@@ -215,6 +215,7 @@ var Datepicker = (function(DX) {
 
 			dropdown.getEventTarget().addEventListener(DropDown.E_SHOWN, setDefaultValue);
 
+			input.addEventListener(Datepicker.E_DESTROY, destroy);
 			input.addEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.addEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
 			input.addEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
@@ -239,6 +240,7 @@ var Datepicker = (function(DX) {
 
 			dropdown.getEventTarget().removeEventListener(DropDown.E_SHOWN, setDefaultValue);
 
+			input.removeEventListener(Datepicker.E_DESTROY, destroy);
 			input.removeEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.removeEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
 			input.removeEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
@@ -421,6 +423,14 @@ var Datepicker = (function(DX) {
 		};
 	};
 })(DX);
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_DESTROY = 'detepicker:destroy';
+
 /** @constant
  * @type {string}
  * @default
