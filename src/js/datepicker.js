@@ -170,6 +170,12 @@ var Datepicker = (function(DX) {
 			}
 		}
 
+		function removeAppearence() {
+			var parent = DX.Dom.getParent(container);
+			parent.insertBefore(input, container);
+			container.remove();
+		}
+
 		function initDropdown() {
 			dropdown = new DropDown(input, {
 				innerTmpl: config.TMPL_DROPDOWN_INNER,
@@ -200,33 +206,45 @@ var Datepicker = (function(DX) {
 		}
 
 		function initListeners() {
+			elements.dropDownOpener.addEventListener(event.CLICK, dropDownOpenerClickHandler);
 
-			elements.dropDownOpener.addEventListener(event.CLICK, function() {
-				if (!isDisabled()) {
-					showDropdown();
-				}
-			});
-
-
-			elements.prevSwitcher.addEventListener(event.CLICK, function() {
-				calendar.drawPrevMonth();
-				toggleSwitchersState();
-			});
-			elements.nextSwitcher.addEventListener(event.CLICK, function() {
-				calendar.drawNextMonth();
-				toggleSwitchersState();
-			});
+			elements.prevSwitcher.addEventListener(event.CLICK, prevSwitcherClickHandler);
+			elements.nextSwitcher.addEventListener(event.CLICK, nextSwitcherClickHandler);
 
 			calendar.getEventTarget().addEventListener(Calendar.E_DAY_SELECTED, selectDate);
 
 			dropdown.getEventTarget().addEventListener(DropDown.E_SHOWN, setDefaultValue);
 
+			input.addEventListener(Datepicker.E_DESTROY, destroy);
 			input.addEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.addEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
 			input.addEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
-			input.addEventListener(event.BLUR, function() {
-				fireDateChanged(input);
-			});
+			input.addEventListener(event.BLUR, inputBlurHandler);
+		}
+
+
+		function destroy() {
+			removeListeners();
+			DX.Event.trigger(input, Datepicker.E_DESTROYED);
+			removeAppearence();
+			dropdown.destroy();
+		}
+
+		function removeListeners() {
+			elements.dropDownOpener.removeEventListener(event.CLICK, dropDownOpenerClickHandler);
+
+			elements.prevSwitcher.removeEventListener(event.CLICK, prevSwitcherClickHandler);
+			elements.nextSwitcher.removeEventListener(event.CLICK, nextSwitcherClickHandler);
+
+			calendar.getEventTarget().removeEventListener(Calendar.E_DAY_SELECTED, selectDate);
+
+			dropdown.getEventTarget().removeEventListener(DropDown.E_SHOWN, setDefaultValue);
+
+			input.removeEventListener(Datepicker.E_DESTROY, destroy);
+			input.removeEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
+			input.removeEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
+			input.removeEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
+			input.removeEventListener(event.BLUR, inputBlurHandler);
 		}
 
 
@@ -340,6 +358,23 @@ var Datepicker = (function(DX) {
 			}
 		}
 
+		function dropDownOpenerClickHandler() {
+			if (!isDisabled()) {
+				showDropdown();
+			}
+		}
+		function prevSwitcherClickHandler() {
+			calendar.drawPrevMonth();
+			toggleSwitchersState();
+		}
+		function nextSwitcherClickHandler() {
+			calendar.drawNextMonth();
+			toggleSwitchersState();
+		}
+		function inputBlurHandler() {
+			fireDateChanged(input);
+		}
+
 		init();
 		/**
 		 * Checks if dropdown is shown
@@ -347,6 +382,12 @@ var Datepicker = (function(DX) {
 		 * @returns {Node}
 		 */
 		this.isDropDownShown = isDropDownShown;
+
+		/**
+		 * Destroying datepicker component and its dropdown
+		 * @method destroy
+		 */
+		this.destroy = destroy;
 
 		/**
 		 * Gets HTMLNode containing dropdown
@@ -382,6 +423,21 @@ var Datepicker = (function(DX) {
 		};
 	};
 })(DX);
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_DESTROYED = 'detepicker:destroyed';
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_DESTROY = 'detepicker:destroy';
+
 /** @constant
  * @type {string}
  * @default
