@@ -429,6 +429,13 @@ var Datepicker = (function(DX) {
  * @default
  * @memberof Datepicker
  */
+Datepicker.E_DESTROYED = 'detepicker:destroyed';
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
 Datepicker.E_DESTROY = 'detepicker:destroy';
 
 /** @constant
