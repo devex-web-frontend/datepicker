@@ -265,7 +265,7 @@ var Datepicker = (function(DX) {
 				date = valueDate;
 				selectedDate = date;
 			} else {
-				date = new Date();
+				date = new Date(new Date().setHours(0,0,0,0));
 			}
 
 			calendar.drawMonth(date);
@@ -274,8 +274,8 @@ var Datepicker = (function(DX) {
 
 		function toggleSwitchersState() {
 			var currentMonth = calendar.getDate(),
-				lastAvailableMonth = new Date(constraints.max),
-				firstAvailableMonth = new Date(constraints.min);
+				lastAvailableMonth = new Date(dateParser(constraints.max)),
+				firstAvailableMonth = new Date(dateParser(constraints.min));
 
 			if (dateUtil.isDate(lastAvailableMonth)) {
 				elements.nextSwitcher.disabled = dateUtil.isEqualMonth(currentMonth, lastAvailableMonth) ||
@@ -318,8 +318,8 @@ var Datepicker = (function(DX) {
 			};
 
 			var isDisabledFlag = !isDateInRange(currentDate, {
-				min: constraints.min,
-				max: constraints.max
+				min: dateParser(constraints.min),
+				max: dateParser(constraints.max)
 			});
 
 			isDisabledFlag && addDisabledModifier();
