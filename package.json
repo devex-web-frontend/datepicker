@@ -23,6 +23,7 @@
   "scripts": {
     "install": "bower prune && bower install",
     "test": "grunt test --prod",
+    "grunt": "grunt",
     "stylus": "grunt stylus",
     "build": "grunt build --prod"
   },

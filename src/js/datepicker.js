@@ -106,7 +106,6 @@ var Datepicker = (function(DX) {
 			isLessOrEqual = dateUtil.isLess(date, lastAvailableDate) ||
 				dateUtil.isEqual(date, lastAvailableDate);
 		}
-
 		return isLessOrEqual && isGreaterOrEqual;
 	}
 
@@ -121,7 +120,7 @@ var Datepicker = (function(DX) {
 			config,
 			dateFormatter = dateUtil.toShortISOString.bind(dateUtil),
 			dateParser = function(value) {
-				return new Date(value);
+				return value ? new Date(value) : value
 			};
 
 		function init() {
@@ -274,8 +273,17 @@ var Datepicker = (function(DX) {
 
 		function toggleSwitchersState() {
 			var currentMonth = calendar.getDate(),
-				lastAvailableMonth = new Date(dateParser(constraints.max)),
-				firstAvailableMonth = new Date(dateParser(constraints.min));
+				max = constraints.max,
+				min = constraints.min,
+				lastAvailableMonth,
+				firstAvailableMonth;
+
+			if (max) {
+				lastAvailableMonth = new Date(dateParser(max));
+			}
+			if (min) {
+				firstAvailableMonth = new Date(dateParser(min));
+			}
 
 			if (dateUtil.isDate(lastAvailableMonth)) {
 				elements.nextSwitcher.disabled = dateUtil.isEqualMonth(currentMonth, lastAvailableMonth) ||
@@ -311,17 +319,18 @@ var Datepicker = (function(DX) {
 		}
 
 		function disabledDatesProcessor(dateObject) {
-			var currentDate = dateObject.date;
+			var currentDate = dateObject.date,
+				max = constraints.max,
+				min = constraints.min;
 
 			var addDisabledModifier = function() {
 				dateObject.modifiers.push(M_DISABLED);
 			};
 
 			var isDisabledFlag = !isDateInRange(currentDate, {
-				min: dateParser(constraints.min),
-				max: dateParser(constraints.max)
+				min: min ? dateParser(min) : min,
+				max: max ? dateParser(max) : max
 			});
-
 			isDisabledFlag && addDisabledModifier();
 
 			if (!isDisabledFlag && config.isDisabledWeekends && isWeekend(currentDate)) {
