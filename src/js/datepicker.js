@@ -218,9 +218,9 @@ var Datepicker = (function(DX) {
 			input.addEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.addEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
 			input.addEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
+			input.addEventListener(Datepicker.E_DISABLED_DATES, disabledDates);
 			input.addEventListener(event.BLUR, inputBlurHandler);
 		}
-
 
 		function destroy() {
 			removeListeners();
@@ -243,6 +243,7 @@ var Datepicker = (function(DX) {
 			input.removeEventListener(Datepicker.E_UPDATE_CONSTRAINTS, updateConstraints);
 			input.removeEventListener(Datepicker.E_UPDATE_CONFIG, updateConfig);
 			input.removeEventListener(Datepicker.E_SHOW_DROPDOWN, showDropdown);
+			input.removeEventListener(Datepicker.E_DISABLED_DATES, disabledDates);
 			input.removeEventListener(event.BLUR, inputBlurHandler);
 		}
 
@@ -269,6 +270,13 @@ var Datepicker = (function(DX) {
 
 			calendar.drawMonth(date);
 			toggleSwitchersState();
+		}
+
+		function disabledDates(event) {
+			var updatedDisabledDates = event.detail;
+
+			config = Object.assign({}, config, updatedDisabledDates);
+			calendar.update();
 		}
 
 		function toggleSwitchersState() {
@@ -479,6 +487,13 @@ Datepicker.E_UPDATE_CONFIG = 'datepicker:updateconfig';
  * @memberof Datepicker
  */
 Datepicker.E_SHOW_DROPDOWN = 'datepicker:showdropdown';
+
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof Datepicker
+ */
+Datepicker.E_DISABLED_DATES = 'datepicker:disabledates';
 
 
 /**
